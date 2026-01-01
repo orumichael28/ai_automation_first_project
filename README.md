@@ -155,6 +155,66 @@ All chat responses include:
 - **Max Tokens**: 150 (maximum tokens per response)
 - **Model**: gpt-4o-mini
 
+## Example Usage with Python
+
+```python
+import requests
+
+# Create a session
+response = requests.post(
+    "http://127.0.0.1:8000/sessions",
+    json={"price": 5000}
+)
+session_id = response.json()["session_id"]
+
+# Send a message
+response = requests.post(
+    f"http://127.0.0.1:8000/sessions/{session_id}/chat",
+    json={"message": "What are you selling?"}
+)
+print(response.json())
+
+# Update price
+requests.put(
+    f"http://127.0.0.1:8000/sessions/{session_id}/price",
+    json={"price": 4500}
+)
+
+# Delete session
+requests.delete(f"http://127.0.0.1:8000/sessions/{session_id}")
+```
+
+## Example Usage with cURL
+
+```bash
+# Create session
+curl -X POST "http://127.0.0.1:8000/sessions" \
+  -H "Content-Type: application/json" \
+  -d '{"price": 5000}'
+
+# Send message
+curl -X POST "http://127.0.0.1:8000/sessions/{session_id}/chat" \
+  -H "Content-Type: application/json" \
+  -d '{"message": "What are you selling?"}'
+
+# Health check
+curl "http://127.0.0.1:8000/health"
+```
+
+## Error Responses
+
+- **404 Not Found**: Session ID doesn't exist or has expired
+- **422 Unprocessable Entity**: Invalid request data (e.g., negative price)
+- **500 Internal Server Error**: OpenAI API error or server issue
+
+## Testing
+
+Run the test script:
+```bash
+python test_api.py
+```
+
+This will test all endpoints and verify the API is working correctly.
 
 ## Logging
 
