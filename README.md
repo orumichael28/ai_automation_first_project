@@ -143,7 +143,7 @@ DELETE /sessions/{session_id}
 
 All chat responses include:
 
-- **reply** (string): The message shown to the customer
+- **reply** (string): The response shown to the customer
 - **intent** (string): One of `buy`, `hesitate`, or `ask_question`
 - **confidence_level** (string): One of `low`, `medium`, or `high`
 
